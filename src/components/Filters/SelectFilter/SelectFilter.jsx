@@ -31,7 +31,7 @@ export function SelectFilter(props) {
                 style={{ width: "100%" }}
                 onChange={onChange}
             >
-                {options}
+                <Select.Option>{options}</Select.Option>
             </Select>
         </div>
     )

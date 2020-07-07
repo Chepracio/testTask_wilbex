@@ -8,10 +8,12 @@ import style from './HeaderTable.module.css'
     Возвращает - шапку таблицы (jsx)
 */
 export function HeaderTable({namesСolumns}) {
-let nameColum = namesСolumns.map((value, index) => {return <th>{value.title}</th>})
+let nameColum = namesСolumns.map((value, index) => {return <th key={index}>{value.title}</th>})
   return (
-    <tr className={style.header}>
-      {nameColum}
-    </tr>
+    <thead>
+      <tr className={style.header}>
+        {nameColum}
+      </tr>
+    </thead>
   )
 }
