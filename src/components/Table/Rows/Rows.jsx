@@ -1,13 +1,17 @@
 import React from 'react'
 import style from './Rows.module.css'
-
+/* 
+    функция-компонент, СТРОКИ 
+    Принимает:
+    dataTable - данные о таблице
+    Возврщает: строки таблицы (jsx)
+*/
 export function Rows ({dataTable}) {
-  const row = dataTable.map((value, index) => {
+  const row = dataTable.map((value) => {
     let date = new Date(Number(value.date_unix)*1000)
     let year = date.getFullYear()
     let month = date.getMonth()
-    let day = date.getDate()
-    
+    let day = date.getDate() 
     return (
       <tr className={style.row}>
         <th>{`${day}.${month}.${year}`}</th>
@@ -18,6 +22,6 @@ export function Rows ({dataTable}) {
     )})
 
   return (
-      <>{row}</>
+      <React.Fragment>{row}</React.Fragment>
   )
 }

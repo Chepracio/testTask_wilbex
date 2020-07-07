@@ -3,7 +3,15 @@ import { Rows } from './Rows/Rows';
 import { HeaderTable } from './HeaderTable/HeaderTable';
 import style from './Table.module.css'
 import Pagination from './Pagination/Pagination';
-
+/* 
+    функция-компонент, СТРОКИ 
+    Принимает:
+    dataTable - данные о таблице
+    namesСolumns - массив со значениями для шапки таблицы
+    countPage - количество страниц 
+    setActivePage - функция для изменения активной страницы
+    Возврщает: строки таблицы (jsx)
+*/
 export function Table (props) {
   const {
     dataTable,

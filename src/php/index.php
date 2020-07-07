@@ -17,19 +17,22 @@
     // устанавливаем кодировку
     $db->set_charset('utf8');
 
-    $start = 0+$count*($page-1);
-
+    $start = 0+$count*($page-1); // Значение строки для начала отсчета (необходимо для отображения на заданной странице необходимых данных)
+        
+    // если данные для фильтрации не заданы, возвращаем запрошенное количество строк по порядку (как записаны в БД)
     if (!$filtration_values) {
         $req_data = "SELECT * FROM `testTask` LIMIT $start, $count";
         // Получаем общее количество строк в таблице
         $req_count = "SELECT COUNT(*) FROM `testTask`";
 
     } else {
+        // если наименование колонки по которой бедум осуществлять фильтрацию равна title, то фильтрацию можно выполнить только по поиску совпадений
         if ($value_column == 'title') {
-            $like = '%'.$filtration_values.'%';
-            $req_data = "SELECT * FROM `testTask` WHERE title LIKE '$like' LIMIT $start, $count";
-            $req_count = "SELECT COUNT(*) FROM `testTask` WHERE title LIKE '$like'";
-        } else {
+            $like = '%'.$filtration_values.'%'; // что ищем
+            $req_data = "SELECT * FROM `testTask` WHERE title LIKE '$like' LIMIT $start, $count"; // запрос получение данных по условиям
+            $req_count = "SELECT COUNT(*) FROM `testTask` WHERE title LIKE '$like'"; // всего строк по такими условиям
+        } else { // иначе (в остальных случаяю)
+            // Проверяме какое условие пришло и выполняем соответствующие действия (все аналогично запросу выше)
             switch ($value_conditions) {
                 case 'contains':
                     $like = '%'.$filtration_values.'%';
@@ -53,7 +56,7 @@
             }
         }
     }
-
+    // Совершаем запросы и формируем данные для ответа
     $get_data = $db->query($req_data);
     $data = array();
     while ($virt_arr = $get_data->fetch_assoc()){
@@ -69,5 +72,5 @@
     $request = json_encode(['count' => $count[0]['COUNT(*)'], 'data' => $data], JSON_UNESCAPED_UNICODE);
     print_r($request);
 
-    $db->close();
+    $db->close(); // Закрываем соединенни
 ?>
